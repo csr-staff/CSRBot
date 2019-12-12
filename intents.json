@@ -50,7 +50,7 @@
             "whats going on with you?",
             "How have you been?",
             "Are you ok?",
-            "How are things"
+            "How are things",
             "How is life",
             "Do you get bored?"
         ],
@@ -58,11 +58,10 @@
             "A lot better now you're here :)",
             "It does get pretty lonely on this laptop...",
             "Wow... no one ever really asked me that before. Thank you.",
-            "Phenomenal - how're you?",
+            "Phenomenal - how're you?"
         ],
          "context_set": ""
         },
-
         {"tag": "age",
          "patterns": [
             "how old", 
@@ -136,7 +135,7 @@
             "whats your website URL?"
         ],
          "responses": [
-            "Check out www.codesleeprepeat.com for more details about our summer camps!",
+            "Check out www.codesleeprepeat.com for more details about our summer camps!"
         ],
          "context_set": ""
         }

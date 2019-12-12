@@ -11,26 +11,67 @@ import random
 import json
 import pickle
 
+
+def chat():
+	print("Start talking with the bot (type quit to stop)!")
+	while True:
+		inp = input("You: ")
+		if inp.lower() == "quit":
+			break
+
+		#results will give us a probability
+		results = model.predict([bag_of_words(inp, words)])
+
+		#How probable our model thinks each neuron is. Each neuron represents a specific tag
+		#print(results)
+
+		#Get index of greatest value (most probable) in our list
+		results_index = numpy.argmax(results)
+		tag = tags[results_index]
+		#print(tag)
+
+		for tag_responses in data["intents"]:
+			if tag_responses['tag'] == tag:
+				responses = tag_responses['responses']
+
+		print(random.choice(responses))
+
+
+#Turn input from user into a bag of words
+def bag_of_words(sentence, words):
+	#Initialize bag of words to be an array of zeros (of size words)
+	bag = [0 for _ in range(len(words))]
+
+	#Tokenize and stem words
+	s_words = nltk.word_tokenize(sentence)
+	s_words = [stemmer.stem(word.lower()) for word in s_words]
+
+	for s in s_words:
+		for i, w in enumerate(words):
+			#If word in words list is the word in our sentence
+			if w == s:
+				bag[i] = 1
+	return numpy.array(bag)
+
+
+#Main.py
 with open("intents.json") as file:
 	data = json.load(file)
 
 try:
 	jklasdfl
 	with open("data.pickle", "rb") as f:
-		words, labels, training, output = pickle.load(f)
+		words, tags, training, output = pickle.load(f)
 
 except:
 	#List of all patterns (potential projected inputs). Duplicates to be removed.
 	words = []
-
 	#List of all "Tags"
-	labels = []
-
+	tags = []
 	#List of all patterns (potential projected inputs)
-	docs_x = []
+	docs_pattern = []
 	#Corresponding tag for a given pattern
-	docs_y = []
-
+	docs_tag = []
 
 	#Load in the JSON file and store all the data
 	for intent in data["intents"]:
@@ -39,17 +80,16 @@ except:
 			#Tokenize (split by space)
 			pattern_words = nltk.word_tokenize(pattern)
 			words.extend(pattern_words)
-			docs_x.append(pattern_words)
-			docs_y.append(intent["tag"])
+			docs_pattern.append(pattern_words)
+			docs_tag.append(intent["tag"])
 
-		if intent["tag"] not in labels:
-			labels.append(intent["tag"])
+		if intent["tag"] not in tags:
+			tags.append(intent["tag"])
 
-	#Remove duplicates and convert to a list
+	#Stem and sort the words
 	words = [stemmer.stem(w.lower()) for w in words if w != "?"]
 	words = sorted(list(set(words)))
-
-	labels = sorted(labels)
+	tags = sorted(tags)
 
 	#Create a "One hot" representation of our text where each index 
 	#in the array represents a word and the number in that index is 
@@ -62,13 +102,15 @@ except:
 	output = []
 
 	#Initialize an array of zeros for each tag 
-	out_empty = [0 for _ in range(len(labels))]
+	out_empty = [0 for _ in range(len(tags))]
 
 	#For each pattern (potential input). X will be the index of the pattern (0 first iteration, then 1, then 2, etc.)
-	for x, doc in enumerate(docs_x):
+	for x, doc in enumerate(docs_pattern):
 		bag = []
 
-		pattern_words = [stemmer.stem(w) for w in doc]
+		pattern_words = []
+		for w in doc:
+			pattern_words.append(stemmer.stem(w))
 
 		for w in words:
 			if w in pattern_words:
@@ -79,7 +121,7 @@ except:
 		#Make a copy (blank list)
 		output_row = out_empty[:]
 		#Looks through the tags, see where the tag is and set that to 1 in our output_row
-		output_row[labels.index(docs_y[x])] = 1
+		output_row[tags.index(docs_tag[x])] = 1
 
 		training.append(bag)
 		output.append(output_row)
@@ -89,8 +131,7 @@ except:
 	output = numpy.array(output)
 
 	with open("data.pickle", "wb") as f:
-		pickle.dump((words, labels, training, output), f)
-
+		pickle.dump((words, tags, training, output), f)
 
 
 #BUILD OUR MODEL
@@ -117,51 +158,5 @@ except:
 	#Want to save the model so don't need to do all the preprocessing
 	model.save("model.tflearn")
 
-#Turn input from user into a bag of words
-def bag_of_words(sentence, words):
-	#Initialize bag of words to be an array of zeros (of size words)
-	bag = [0 for _ in range(len(words))]
-
-	#Tokenize and stem words
-	s_words = nltk.word_tokenize(sentence)
-	s_words = [stemmer.stem(word.lower()) for word in s_words]
-
-	for s in s_words:
-		for i, w in enumerate(words):
-			#If word in words list is the word in our sentence
-			if w == s:
-				bag[i] = 1
-	return numpy.array(bag)
-
-
-def chat():
-	print("Start talking with the bot (type quit to stop)!")
-	while True:
-		inp = input("You: ")
-		if inp.lower() == "quit":
-			break
-
-		#results will give us a probability
-		results = model.predict([bag_of_words(inp, words)])
-
-		#How probable our model thinks each neuron is. Each neuron represents a specific tag
-		#print(results)
-
-		#Get index of greatest value (most probable) in our list
-		results_index = numpy.argmax(results)
-		tag = labels[results_index]
-		#print(tag)
-
-		for tag_responses in data["intents"]:
-			if tag_responses['tag'] == tag:
-				responses = tag_responses['responses']
-
-		print(random.choice(responses))
 
 chat()
-
-
-
-
-
-
