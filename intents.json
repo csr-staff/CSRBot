@@ -1,0 +1,144 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": [
+            "Hi", 
+            "How are you?", 
+            "Hey",
+            "Sup",
+            "Yo",
+            "waddup",
+            "whatsup",
+            "Is anyone there?", 
+            "Hello", 
+            "Good day", 
+            "Whats up", 
+            "How you doing?", 
+            "How is your day"
+        ],
+         "responses": [
+            "Hello!",
+            "Hey there!",
+            "Good to see you again!", 
+            "Hi there, how can I help?"
+        ],
+         "context_set": ""
+        },
+        {"tag": "goodbye",
+         "patterns": [
+            "cya", 
+            "bye",
+            "peace",
+            "deuces",
+            "later",
+            "See you later", 
+            "Goodbye", 
+            "I am leaving", 
+            "Have a Good day"
+        ],
+         "responses": [
+            "Sad to see you go :(", 
+            "Talk to you later", 
+            "Goodbye!",
+            "It was a pleasure talking to you!",
+            "Come back if you have anymore questions!"
+        ],
+         "context_set": ""
+        },
+        {"tag": "mood",
+         "patterns": [
+            "how are you doing?",
+            "whats going on with you?",
+            "How have you been?",
+            "Are you ok?",
+            "How are things"
+            "How is life",
+            "Do you get bored?"
+        ],
+         "responses": [
+            "A lot better now you're here :)",
+            "It does get pretty lonely on this laptop...",
+            "Wow... no one ever really asked me that before. Thank you.",
+            "Phenomenal - how're you?",
+        ],
+         "context_set": ""
+        },
+
+        {"tag": "age",
+         "patterns": [
+            "how old", 
+            "how old are you", 
+            "what is your age", 
+            "how old are you", 
+            "age?"
+        ],
+         "responses": [
+            "I am 18 years old!", 
+            "18 years young!"
+        ],
+         "context_set": ""
+        },
+        {"tag": "name",
+         "patterns": [
+            "what is your name", 
+            "what should I call you", 
+            "whats your name?",
+            "name"
+        ],
+         "responses": [
+            "No one ever asks me that... thank you.", 
+            "I'm CSRBot", 
+            "My name is CSRBot!"
+        ],
+         "context_set": ""
+        },
+        {"tag": "location",
+         "patterns": [
+            "Where is CSR located", 
+            "What is the location of the camp", 
+            "Where is the camp",
+            "What locations do you offer"
+        ],
+         "responses": [
+            "Code Sleep Repeat currently operates programs across Palo Alto, LA and NY"
+        ],
+         "context_set": ""
+        },
+        {"tag": "hours",
+         "patterns": [
+            "time of summer program", 
+            "what are your hours", 
+            "hours of operation"
+        ],
+         "responses": [
+            "We are a week-long, non-residential program. Our hours are 9am-3pm (Monday-Friday)",
+            "Check out our website (www.codesleeprepeat.com) for details on the program dates and locations!"
+        ],
+         "context_set": ""
+        },
+        {"tag": "quality",
+         "patterns": [
+            "why should I attend CSR?",
+            "what is so good about CSR?",
+            "Is CSR a good summer program?",
+            "Is CSR challenging?"
+        ],
+         "responses": [
+            "Code Sleep Repeat is the best summer camp in the US!",
+            "In CSR you will grow as both an programmer and a person"
+        ],
+         "context_set": ""
+        },
+        {"tag": "website",
+         "patterns": [
+            "where can I learn more",
+            "do you have a website I could check out?",
+            "can I see more information about the program?",
+            "whats your website URL?"
+        ],
+         "responses": [
+            "Check out www.codesleeprepeat.com for more details about our summer camps!",
+        ],
+         "context_set": ""
+        }
+   ]
+}
